@@ -1,0 +1,18 @@
+# Local Zoho credentials (DPAPI encrypted for one Windows user)
+.zoho_app_password.*
+
+# Local prospect data and sending state
+leads.csv
+unsubscribed.txt
+send_log.csv
+test_send_log.csv
+
+# Generated previews and Python cache
+邮件预览/
+__pycache__/
+*.py[cod]
+
+# Generated email files and temporary artifacts
+*.eml
+*.html
+2551e6c6af3aa0523ccb0be8238ed4d0.png
