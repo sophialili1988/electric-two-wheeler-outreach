@@ -52,4 +52,10 @@ python .\send_ev_development_emails.py --test-recipient "你的测试邮箱地�
 python .\send_ev_development_emails.py --csv .\leads_template.csv --send --max-emails 10 --delay 60
 ```
 
-正式发送前同样会显示本次邮件并要求输入 `SEND`。`unsubscribed.txt` 中的地址、CSV 中标记 `do_not_contact` 的地址、重复地址和 `send_log.csv` 中已成功发送的地址会被跳过。测试发送单独记录在 `test_send_log.csv`。
+正式发送前同样会显示本次邮件并要求输入 `SEND`。`unsubscribed.txt` 中的地址、CSV 中标记 `do_not_contact` 的地址、重复地址和 `send_log.csv` 中已处理的地址会被跳过。测试发送单独记录在 `test_send_log.csv`。
+
+## 定时自动发送
+
+Codex 的电动车定时任务在上午生成当天名单和发送队列，并于北京时间 19:30 启动发送。自动发送只处理当天 `send_queue.csv` 中有明确联系依据的条目，必须提供 `send_eligible=yes`、`contact_legal_basis`、`contact_legal_source` 和 `personalization_source`。未保存本机加密凭据、SMTP 登录失败、退订或重复地址都会停止或跳过；无人值守时不会弹出密码提示。发送记录中的 `sent` 只表示 SMTP 接受了提交，不代表客户已收到或打开邮件。失败或结果不确定的地址不会自动重试。
+
+定时模式使用 `--scheduled-auto-send` 跳过交互确认。它必须和 `--send` 一起使用，只用于已经授权的本机定时队列；不要用于普通名单或测试邮件。随机间隔应在四小时窗口内完成。
